@@ -26,28 +26,50 @@ public class Eagle extends Bird implements Fly{
 
     @Override
     public void takeOff() {
-        this.flying=true;
-        System.out.println("Eagle takes off in the sky");
+        if(this.flying) {
+            System.out.println(getName() + " can't take off, already flying !");
+        } else {
+            this.flying=true;
+            System.out.println(getName() + " takes off in the sky");
+        }
+
     }
 
     @Override
     public void land() {
-        this.flying=false;
-        System.out.println("Eagle is landing");
+        if(!this.flying) {
+            System.out.println( getName() + "can't take of, already on the ground!" );
+        } else {
+            this.flying = false;
+            this.altitude=0;
+            System.out.println( getName() + " is landing" );
+        }
     }
 
     @Override
     public int ascend(int meters) {
-        this.altitude+=meters;
-        System.out.println("Eagle flies upward, altitude " + this.altitude);
-        return meters;
+        if(this.isFlying()) {
+            this.altitude += meters;
+            System.out.println( getName() + " flies upward, altitude " + this.altitude );
+        } else {
+            System.out.println( getName() + " can't ascend, not flying !");
+        }
+        return this.altitude;
     }
 
     @Override
     public int descend(int meters) {
-        this.altitude-=meters;
-        System.out.println("Eagle flies downward, altitude " + this.altitude);
-        return meters;
+        if (this.flying) {
+            this.altitude -= meters;
+            if (this.altitude < 0) {
+                System.out.println( "Mayday mayday " + getName() + " has crashed !!!!" );
+                this.altitude = 0;
+            } else {
+                System.out.println( getName() + " flies downward, altitude " + this.altitude );
+            }
+        } else {
+            System.out.println( getName() + " can't descend, not flying !" );
+        }
+        return this.altitude;
     }
-
 }
